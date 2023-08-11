@@ -11,7 +11,24 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
+	var num int
+	fmt.Scan(&num)
+	age := num
+	switch {
+	case age == 0:
+		fmt.Println("newborn")
+	case age >= 1 && age <= 3:
+		fmt.Println("toddler")
+	case age >= 4 && age <= 12:
+		fmt.Println("child")
+	case age >= 13 && age <= 17:
+		fmt.Println("teenager")
+	default:
+		fmt.Println("adult")
+	}
 }
