@@ -24,6 +24,8 @@ func main() {
 			fmt.Println("Fizz")
 		} else if divisibleBy5 {
 			fmt.Println("Buzz")
+		} else {
+			fmt.Println(i)
 		}
 	}
 }
