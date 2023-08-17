@@ -44,7 +44,7 @@ func main() {
 			fmt.Println("Roll #", i, "Die #", d, ":", rolled)
 		}
 		fmt.Println("Total rolled ", sum)
-		switch sum := sum; {
+		switch {
 		case sum == 2 && dice == 2:
 			fmt.Println("Snake eyes")
 		case sum == 7:
