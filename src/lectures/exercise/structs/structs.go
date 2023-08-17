@@ -19,6 +19,25 @@ package main
 
 import "fmt"
 
-func main() {
+type rectangle struct {
+	length int
+	width  int
+}
 
+func RectAreaPeri(a rectangle) (int, int) {
+	fmt.Scan(&a.length)
+	fmt.Scan(&a.width)
+	return (a.length * a.width), (a.length * 2) + (a.width * 2)
+}
+
+func DoubleRectAreaPeri(d rectangle) (int, int) {
+	fmt.Scan(&d.length)
+	fmt.Scan(&d.width)
+	return 4 * (d.length * d.width), (2*(d.length*2) + 2*(d.width*2))
+}
+
+func main() {
+	var area rectangle
+	fmt.Println(RectAreaPeri(area))
+	fmt.Println(DoubleRectAreaPeri(area))
 }
