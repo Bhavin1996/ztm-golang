@@ -29,6 +29,50 @@ const (
 	Retired     = 3
 )
 
+func displayServerInfo(a map[string]int) {
+	totalServers := len(a)
+	totalOnline := 0
+	toatalOffline := 0
+	totalMaintenance := 0
+	totalRetired := 0
+
+	for _, v := range a {
+		switch {
+		case v == 0:
+			{
+				totalOnline += 1
+				break
+			}
+		case v == 1:
+			{
+				toatalOffline += 1
+				break
+			}
+		case v == 2:
+			{
+				totalMaintenance += 1
+				break
+			}
+		case v == 3:
+			{
+				totalRetired += 1
+				break
+			}
+		}
+	}
+	fmt.Println("Total servers are", totalServers)
+	fmt.Println("Total server online are #", totalOnline, "\nTotal server Offline are #", toatalOffline, "\nTotal server Maintainance #", totalMaintenance, "\nTotal server retired #", totalRetired)
+
+}
+
 func main() {
 	servers := []string{"darkstar", "aiur", "omicron", "w359", "baseline"}
+	serverInfo := make(map[string]int)
+	for i := 0; i < len(servers); i++ {
+		serverInfo[servers[i]] = Online
+	}
+	for key, value := range serverInfo {
+		fmt.Println(key, value)
+	}
+	displayServerInfo(serverInfo)
 }
