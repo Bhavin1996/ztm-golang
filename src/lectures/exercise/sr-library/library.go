@@ -19,7 +19,74 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+
+	"go.starlark.net/lib/time"
+)
+
+type Title string
+type Name string
+
+type Audit struct {
+	checkOutTime time.Time
+	checkInTime  time.Time
+}
+
+type Member struct {
+	name  Name
+	books map[Title]Audit
+}
+
+type BookEntry struct {
+	total  int // total books owned
+	lended int // total books lended out
+}
+
+type Library struct {
+	member map[Name]Member
+	books  map[Title]BookEntry
+}
+
+func printMemberAudit(menber *Member) {
+	for title, audit := range menber.books {
+		var returnTime string
+		if audit.checkInTime.IsZero() {
+			returnTime = "[not returned yet]"
+		} else {
+			returnTime = audit.checkInTime.String()
+		}
+		fmt.Println(menber.name, ":", title, ":", audit.checkOutTime.String(), "through", returnTime)
+	}
+}
+
+func printAllMemberAudit(library *Library) {
+	for _, member := range library.member {
+		printMemberAudit(&member)
+	}
+}
+
+func printLibraryBooks(library *Library) {
+	fmt.Println()
+	for title, book := range library.books {
+		fmt.Println(title, "/ total : ", book.total, "/ lended : ", book.lended)
+	}
+	fmt.Println()
+}
+
+func checkoutBook(library *Library, title Title, member *Member) bool {
+	book, found := library.books[title]
+	if !found {
+		fmt.Println("Book not a part of library")
+		return false
+	}
+
+	if book.lended == book.total {
+		fmt.Println("No more book available to lend")
+		return false
+	}
+}
 
 func main() {
 
