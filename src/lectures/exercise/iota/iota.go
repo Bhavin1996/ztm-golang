@@ -14,14 +14,40 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
+
+const (
+	Add = iota
+	Subtract
+	Multiply
+	Divide
+)
+
+type operations int
+
+func (op operations) calculate(lhs, rhs int) int {
+	switch op {
+	case Add:
+		return lhs + rhs
+	case Subtract:
+		return lhs - rhs
+	case Multiply:
+		return lhs * rhs
+	case Divide:
+		return lhs / rhs
+	}
+	panic("Unhandled operations")
+}
 
 func main() {
+	add := operations(Add)
 	fmt.Println(add.calculate(2, 2)) // = 4
-
+	sub := operations(Subtract)
 	fmt.Println(sub.calculate(10, 3)) // = 7
-
+	mul := operations(Multiply)
 	fmt.Println(mul.calculate(3, 3)) // = 9
-
+	div := operations(Divide)
 	fmt.Println(div.calculate(100, 2)) // = 50
 }

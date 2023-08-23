@@ -22,8 +22,6 @@ package main
 import (
 	"fmt"
 	"time"
-
-	"go.starlark.net/lib/time"
 )
 
 type Title string
@@ -86,8 +84,75 @@ func checkoutBook(library *Library, title Title, member *Member) bool {
 		fmt.Println("No more book available to lend")
 		return false
 	}
+	book.lended += 1
+	library.books[title] = book
+
+	member.books[title] = Audit{checkOutTime: time.Now()}
+	return true
+}
+
+func returnBook(library *Library, title Title, member *Member) bool {
+	book, found := library.books[title]
+	if !found {
+		fmt.Println("Book not part of library")
+		return false
+	}
+
+	audit, found := member.books[title]
+	if !found {
+		fmt.Println("Member did nit chcek out this book")
+		return false
+	}
+	book.lended -= 1
+	library.books[title] = book
+
+	audit.checkInTime = time.Now()
+	member.books[title] = audit
+	return true
 }
 
 func main() {
+	library := Library{
+		books:  make(map[Title]BookEntry),
+		member: make(map[Name]Member),
+	}
+	library.books["Webapps in GO"] = BookEntry{
+		total:  4,
+		lended: 0,
+	}
+	library.books["The little GO book"] = BookEntry{
+		total:  3,
+		lended: 0,
+	}
+	library.books["Let's learn GO"] = BookEntry{
+		total:  2,
+		lended: 0,
+	}
+	library.books["Go Bootcamp"] = BookEntry{
+		total:  1,
+		lended: 0,
+	}
 
+	library.member["Jayson"] = Member{"Jayson", make(map[Title]Audit)}
+	library.member["Tyler"] = Member{"Tyler", make(map[Title]Audit)}
+	library.member["Jean"] = Member{"Jean", make(map[Title]Audit)}
+
+	fmt.Println("\nInitial :")
+	printLibraryBooks(&library)
+	printAllMemberAudit(&library)
+
+	member := library.member["Jayson"]
+	checkedOut := checkoutBook(&library, "Go Bootcamp", &member)
+	fmt.Println("\nCheck out a book :")
+	if checkedOut {
+		printLibraryBooks(&library)
+		printAllMemberAudit(&library)
+	}
+
+	returned := returnBook(&library, "Go Bootcamp", &member)
+	fmt.Println("\nCheck in a book :")
+	if returned {
+		printLibraryBooks(&library)
+		printAllMemberAudit(&library)
+	}
 }

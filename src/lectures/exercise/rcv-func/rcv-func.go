@@ -16,6 +16,30 @@ package main
 
 import "fmt"
 
-func main() {
+type player struct {
+	name              string
+	health, MaxHealth int
+	energy, MaxEnergy int
+}
 
+func stats(data *player) {
+	fmt.Println(*data)
+}
+
+func (data *player) changeStat(x, y int) {
+	data.health += x
+	data.energy += y
+	fmt.Println("The new health is :", data.health, "\nThe energy is :", data.energy)
+}
+
+func main() {
+	newPlayer := player{
+		name:      "Kylo",
+		health:    90,
+		MaxHealth: 100,
+		energy:    700,
+		MaxEnergy: 1000,
+	}
+	stats(&newPlayer)
+	newPlayer.changeStat(5, 100)
 }
