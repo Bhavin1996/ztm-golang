@@ -12,7 +12,7 @@
 //  - Print out the statistic change within each function
 //  - Execute each function at least once
 
-package main
+package testing
 
 import "fmt"
 

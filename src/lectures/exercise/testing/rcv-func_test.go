@@ -16,5 +16,21 @@ package testing
 import "testing"
 
 func TestChangeStat(t *testing.T) {
+	q := player{
+		name:      "Kylo",
+		health:    90,
+		MaxHealth: 100,
+		energy:    700,
+		MaxEnergy: 1000,
+	}
+	if q.health > 100 {
+		t.Errorf("Incorrect player health stat, want %v , got %v ", q.MaxHealth, q.health)
+	}
+	if q.energy > 1000 {
+		t.Errorf("Invalid player energy stat")
+	}
+	if q.health <= 0 && q.energy <= 0 {
+		t.Errorf("Invalid player stat parameter")
+	}
 
 }
