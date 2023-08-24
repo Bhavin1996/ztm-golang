@@ -51,3 +51,39 @@ func main() {
 	div := operations(Divide)
 	fmt.Println(div.calculate(100, 2)) // = 50
 }
+
+/*package main
+
+import (
+	"fmt"
+)
+
+type direction int
+
+const (
+	North direction = iota
+	East
+	South
+	West
+)
+
+func (d direction) String() string {
+	switch d {
+	case North:
+		return "North"
+	case East:
+		return "East"
+	case South:
+		return "South"
+	case West:
+		return "West"
+	default:
+		return "Unknown"
+	}
+}
+
+func main() {
+	dir := East
+	fmt.Println("Direction:", dir) // Uses the String() method to convert to a string
+}
+*/
