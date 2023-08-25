@@ -11,11 +11,14 @@
 //
 // --Notes:
 // * Use `go test -v ./exercise/testing` to run these specific tests
-package testing
+package main
 
-import "testing"
+import (
+	"testing"
+)
 
-func TestChangeStat(t *testing.T) {
+func TestAddHealth(t *testing.T) {
+	var x uint
 	q := player{
 		name:      "Kylo",
 		health:    90,
@@ -23,14 +26,63 @@ func TestChangeStat(t *testing.T) {
 		energy:    700,
 		MaxEnergy: 1000,
 	}
-	if q.health > 100 {
-		t.Errorf("Incorrect player health stat, want %v , got %v ", q.MaxHealth, q.health)
+	x = 10
+	totalHealth := x + q.health
+	if q.health > q.MaxHealth {
+		t.Errorf("Invalid player stat at start")
 	}
-	if q.energy > 1000 {
-		t.Errorf("Invalid player energy stat")
+	if totalHealth > q.MaxHealth {
+		t.Errorf("Invalid stat to add to current health pull")
 	}
-	if q.health <= 0 && q.energy <= 0 {
-		t.Errorf("Invalid player stat parameter")
-	}
+}
 
+func TestApplyDamage(t *testing.T) {
+	var x uint
+	x = 50
+	q := player{
+		name:      "Kylo",
+		health:    90,
+		MaxHealth: 100,
+		energy:    700,
+		MaxEnergy: 1000,
+	}
+	remHealth := q.health - x
+	if remHealth > q.health {
+		t.Errorf("Out of bound damage taken")
+	}
+}
+
+func TestAddEnergy(t *testing.T) {
+	var x uint
+	q := player{
+		name:      "Kylo",
+		health:    90,
+		MaxHealth: 100,
+		energy:    700,
+		MaxEnergy: 1000,
+	}
+	x = 10
+	totalEnergy := x + q.energy
+	if q.energy > q.MaxEnergy {
+		t.Errorf("Invalid player stat at start")
+	}
+	if totalEnergy > q.MaxEnergy {
+		t.Errorf("Invalid stat to add to current energy pull")
+	}
+}
+
+func TestConsumeEnergy(t *testing.T) {
+	var x uint
+	x = 20
+	q := player{
+		name:      "Kylo",
+		health:    90,
+		MaxHealth: 100,
+		energy:    700,
+		MaxEnergy: 1000,
+	}
+	remEnergy := q.energy - x
+	if remEnergy > q.MaxEnergy {
+		t.Errorf("All energy has been used")
+	}
 }

@@ -16,20 +16,20 @@ package main
 
 import "fmt"
 
-type player struct {
+type Player struct {
 	name              string
 	health, MaxHealth uint
 	energy, MaxEnergy uint
 }
 
-func (player *player) addHealth(amount uint) {
+func (player *Player) addHealth(amount uint) {
 	player.health += amount
 	if player.health > player.MaxHealth {
 		player.health = player.MaxHealth
 	}
 	fmt.Println(player.name, "Add", amount, "health ->", player.health)
 }
-func (player *player) applyDamage(amount uint) {
+func (player *Player) applyDamage(amount uint) {
 	if player.health-amount > player.health {
 		player.health = 0
 	} else {
@@ -38,7 +38,7 @@ func (player *player) applyDamage(amount uint) {
 	fmt.Println(player.name, "Damage", amount, "->", player.health)
 }
 
-func (player *player) addEnergy(amount uint) {
+func (player *Player) addEnergy(amount uint) {
 	player.energy += amount
 	if player.energy > player.MaxEnergy {
 		player.energy = player.MaxEnergy
@@ -46,7 +46,7 @@ func (player *player) addEnergy(amount uint) {
 	fmt.Println(player.name, "Add", amount, "energy ->", player.energy)
 }
 
-func (player *player) consumeEnergy(amount uint) {
+func (player *Player) consumeEnergy(amount uint) {
 	if player.energy-amount > player.energy {
 		player.energy = 0
 	} else {
@@ -56,7 +56,7 @@ func (player *player) consumeEnergy(amount uint) {
 }
 
 func main() {
-	newPlayer := player{
+	newPlayer := Player{
 		name:      "Kylo",
 		health:    90,
 		MaxHealth: 100,

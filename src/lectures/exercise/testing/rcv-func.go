@@ -12,24 +12,47 @@
 //  - Print out the statistic change within each function
 //  - Execute each function at least once
 
-package testing
+package main
 
 import "fmt"
 
 type player struct {
 	name              string
-	health, MaxHealth int
-	energy, MaxEnergy int
+	health, MaxHealth uint
+	energy, MaxEnergy uint
 }
 
-func stats(data *player) {
-	fmt.Println(*data)
+func (player *player) addHealth(amount uint) {
+	player.health += amount
+	if player.health > player.MaxHealth {
+		player.health = player.MaxHealth
+	}
+	fmt.Println(player.name, "Add", amount, "health ->", player.health)
+}
+func (player *player) applyDamage(amount uint) {
+	if player.health-amount > player.health {
+		player.health = 0
+	} else {
+		player.health -= amount
+	}
+	fmt.Println(player.name, "Damage", amount, "->", player.health)
 }
 
-func (data *player) changeStat(x, y int) {
-	data.health += x
-	data.energy += y
-	fmt.Println("The new health is :", data.health, "\nThe energy is :", data.energy)
+func (player *player) addEnergy(amount uint) {
+	player.energy += amount
+	if player.energy > player.MaxEnergy {
+		player.energy = player.MaxEnergy
+	}
+	fmt.Println(player.name, "Add", amount, "energy ->", player.energy)
+}
+
+func (player *player) consumeEnergy(amount uint) {
+	if player.energy-amount > player.energy {
+		player.energy = 0
+	} else {
+		player.energy -= amount
+	}
+	fmt.Println(player.name, "Energy consumed", amount, "->", player.energy)
 }
 
 func main() {
@@ -40,8 +63,12 @@ func main() {
 		energy:    700,
 		MaxEnergy: 1000,
 	}
-	stats(&newPlayer)
-	newPlayer.changeStat(5, 100)
+	newPlayer.applyDamage(99)
+	newPlayer.addHealth(10)
+	newPlayer.consumeEnergy(20)
+	newPlayer.addEnergy(10)
+	newPlayer.consumeEnergy(9999)
+
 }
 
 /*
