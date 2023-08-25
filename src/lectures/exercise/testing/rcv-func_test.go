@@ -18,7 +18,6 @@ import (
 )
 
 func TestAddHealth(t *testing.T) {
-	var x uint
 	q := player{
 		name:      "Kylo",
 		health:    90,
@@ -26,19 +25,13 @@ func TestAddHealth(t *testing.T) {
 		energy:    700,
 		MaxEnergy: 1000,
 	}
-	x = 10
-	totalHealth := x + q.health
+	q.addHealth(10)
 	if q.health > q.MaxHealth {
-		t.Errorf("Invalid player stat at start")
-	}
-	if totalHealth > q.MaxHealth {
-		t.Errorf("Invalid stat to add to current health pull")
+		t.Errorf("Invalid health added, wanted %v but got %v", q.MaxHealth, q.health)
 	}
 }
 
 func TestApplyDamage(t *testing.T) {
-	var x uint
-	x = 50
 	q := player{
 		name:      "Kylo",
 		health:    90,
@@ -46,9 +39,9 @@ func TestApplyDamage(t *testing.T) {
 		energy:    700,
 		MaxEnergy: 1000,
 	}
-	remHealth := q.health - x
-	if remHealth > q.health {
-		t.Errorf("Out of bound damage taken")
+	q.applyDamage(99)
+	if !(q.health >= q.MaxHealth) {
+		t.Errorf("Please enter proper value, wanted: %v", q.health)
 	}
 }
 
