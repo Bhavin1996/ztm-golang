@@ -12,9 +12,7 @@
 
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 type Bytes int
 type Celcius float32
@@ -31,8 +29,46 @@ type MemoryUsage struct {
 	amount []Bytes
 }
 
+type systemMonitoring struct {
+	BandwidthUsage
+	CpuTemp
+	MemoryUsage
+}
+
+func (b *BandwidthUsage) averageBandwidth() int {
+	sum := 0
+	for i := 0; i < len(b.amount); i++ {
+		sum += int(b.amount[i])
+	}
+	return sum / len(b.amount)
+}
+
+func (c *CpuTemp) averageCPUTemp() int {
+	sum := 0
+	for i := 0; i < len(c.temp); i++ {
+		sum += int(c.temp[i])
+	}
+	return sum / len(c.temp)
+}
+
+func (b *BandwidthUsage) averageMemoryUses() int {
+	sum := 0
+	for i := 0; i < len(b.amount); i++ {
+		sum += int(b.amount[i])
+	}
+	return sum / len(b.amount)
+}
+
 func main() {
 	bandwidth := BandwidthUsage{[]Bytes{50000, 100000, 130000, 80000, 90000}}
 	temp := CpuTemp{[]Celcius{50, 51, 53, 51, 52}}
 	memory := MemoryUsage{[]Bytes{800000, 800000, 810000, 820000, 800000}}
+	dash := systemMonitoring{
+		BandwidthUsage: bandwidth,
+		CpuTemp:        temp,
+		MemoryUsage:    memory,
+	}
+	fmt.Println("Average bandwidth uses are", dash.averageBandwidth())
+	fmt.Println("Average CPU temps are", dash.averageCPUTemp())
+	fmt.Println("Average memory uses are", dash.averageMemoryUses())
 }
