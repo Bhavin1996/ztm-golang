@@ -18,8 +18,38 @@
 
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strings"
+)
+
+const (
+	cmdHello   = "hello"
+	cmdGoodBye = "bye"
+)
 
 func main() {
-
+	scanner := bufio.NewScanner(os.Stdin)
+	numLines := 0
+	numCommands := 0
+	for scanner.Scan() {
+		if strings.ToUpper(scanner.Text()) == "Q" {
+			break
+		} else {
+			text := strings.TrimSpace(scanner.Text())
+			switch text {
+			case cmdHello:
+				numCommands += 1
+				fmt.Println("The command response : hi")
+			case cmdGoodBye:
+				numCommands += 1
+				fmt.Println("The command resonse : bye")
+				if text != "" {
+					numLines += 1
+				}
+			}
+		}
+	}
 }
