@@ -18,7 +18,18 @@
 
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"unicode"
+)
+
+type LineIterator func(line string)
+
+func report(ln []string, call LineIterator) {
+	for _, line := range ln {
+		call(line)
+	}
+}
 
 func main() {
 	lines := []string{
@@ -28,4 +39,27 @@ func main() {
 		"12 spaces,",
 		"and 4 punctuation marks in these lines of text!",
 	}
+	NumberOfLetters := 0
+	NumberOfDigits := 0
+	NumberOfSpaces := 0
+	NumberOfPunctuation := 0
+
+	res := func(line string) {
+		for _, ln := range line {
+			if unicode.IsLetter(ln) {
+				NumberOfLetters += 1
+			} else if unicode.IsDigit(ln) {
+				NumberOfDigits += 1
+			} else if unicode.IsSpace(ln) {
+				NumberOfSpaces += 1
+			} else if unicode.IsPunct(ln) {
+				NumberOfPunctuation += 1
+			}
+		}
+	}
+	report(lines, res)
+	fmt.Println("Number of Letters are", NumberOfLetters)
+	fmt.Println("Number of Digits are", NumberOfDigits)
+	fmt.Println("Number of spaces are", NumberOfSpaces)
+	fmt.Println("Number of Punctuations are", NumberOfPunctuation)
 }
