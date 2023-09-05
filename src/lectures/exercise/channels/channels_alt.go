@@ -12,7 +12,8 @@
 //* Sum the results from each job to generate a final result, and print it
 //  to the terminal
 //package channels
-/*package main
+
+package main
 
 import (
 	"fmt"
@@ -20,45 +21,34 @@ import (
 	"time"
 )
 
-type Job int
-
-func longCalculation(i Job) int {
+func longCalculationAlt(JobNumber int, result chan int) {
 	duration := time.Duration(rand.Intn(1000)) * time.Millisecond
 	time.Sleep(duration)
-	fmt.Printf("Job %d complete in %v\n", i, duration)
-	return int(i) * 30
-}
-
-func makeJobs() []Job {
-	jobs := make([]Job, 0, 100)
-	for i := 0; i < 100; i++ {
-		jobs = append(jobs, Job(rand.Intn(10000)))
-	}
-	return jobs
-}
-
-func runJobs(resultChan chan Job, i Job) {
-	resultChan <- Job(longCalculation(i))
+	fmt.Printf("Job %d complete in %v\n", JobNumber, duration)
+	result <- (JobNumber * 30)
 }
 
 func main() {
 
 	rand.New(rand.NewSource(time.Now().UnixNano()))
-	jobs := makeJobs()
-	result := make(chan Job, 10)
-	for i := 0; i < len(jobs); i++ {
-		go runJobs(result, jobs[i])
+	var input int
+	fmt.Scan(&input)
+	//jobID := make(chan int, input)
+	result := make(chan int, input)
+
+	for i := 0; i < input; i++ {
+		go longCalculationAlt(i, result)
 	}
-	resultCount := 0
+
 	sum := 0
+	count := 0
 	for {
 		n := <-result
-		sum += int(n)
-		resultCount += 1
-		if resultCount == len(jobs) {
+		sum += n
+		count += 1
+		if count == input {
 			break
 		}
 	}
 	fmt.Println("Total sum is", sum)
-
-}*/
+}
