@@ -44,11 +44,11 @@ func CountLetters(rd bufio.Reader, result chan int) {
 
 func main() {
 	filepath := "D:/ztm-golang/src/lectures/exercise/sync/test.txt"
-	scanner := bufio.NewScanner(os.Stdin)
+	//scanner := bufio.NewScanner(os.Stdin)
 	result := make(chan int)
 	totalLetters := 0
 
-	file, err := os.Create(filepath)
+	/*file, err := os.Create(filepath)
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
@@ -70,9 +70,9 @@ func main() {
 			break
 		}
 	}
-	defer file.Close()
+	defer file.Close()*/
 
-	file, err = os.Open(filepath)
+	file, err := os.Open(filepath)
 	if err != nil {
 		fmt.Println("Error", err)
 	}
@@ -80,7 +80,6 @@ func main() {
 
 	rd := bufio.NewReader(file)
 	go CountLetters(*rd, result)
-	n := <-result
-	totalLetters += n
+	totalLetters = <-result
 	fmt.Println("Total letters in a file are ", totalLetters)
 }
