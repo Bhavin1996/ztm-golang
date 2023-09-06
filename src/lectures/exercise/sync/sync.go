@@ -19,7 +19,68 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
+	"unicode"
 )
 
-func main() {}
+//var wg sync.WaitGroup
+
+func CountLetters(rd bufio.Reader, result chan int) {
+	count := 0
+	for {
+		r, _, err := rd.ReadRune()
+
+		if err != nil {
+			break
+		}
+		if unicode.IsLetter(r) {
+			count += 1
+		}
+	}
+	result <- count
+}
+
+func main() {
+	filepath := "D:/ztm-golang/src/lectures/exercise/sync/test.txt"
+	scanner := bufio.NewScanner(os.Stdin)
+	result := make(chan int)
+	totalLetters := 0
+
+	file, err := os.Create(filepath)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	fmt.Println("Enter content in the file (type 'exit' to end):")
+
+	for {
+
+		scanner.Scan()
+		data := scanner.Text()
+
+		if data == "exit" {
+			break // Terminate the loop when the user enters "exit".
+		}
+
+		_, err := file.WriteString(data + "\n")
+		if err != nil {
+			fmt.Println("Error:", err)
+			break
+		}
+	}
+	defer file.Close()
+
+	file, err = os.Open(filepath)
+	if err != nil {
+		fmt.Println("Error", err)
+	}
+	defer file.Close()
+
+	rd := bufio.NewReader(file)
+	go CountLetters(*rd, result)
+	n := <-result
+	totalLetters += n
+	fmt.Println("Total letters in a file are ", totalLetters)
+}
