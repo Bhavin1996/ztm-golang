@@ -1,4 +1,4 @@
-package main
+/*package main
 
 import (
 	"bufio"
@@ -48,7 +48,13 @@ func main() {
 					totalLetters.count += 1
 				}()
 			}
+		}else{
+			break
 		}
 	}
-
-}
+	wg.Wait()
+	totalLetters.Lock()
+	sum := totalLetters.count
+	totalLetters.Unlock()
+	fmt.Println("Total letters",sum)
+}*/
