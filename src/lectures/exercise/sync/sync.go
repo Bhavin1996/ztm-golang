@@ -48,6 +48,7 @@ func main() {
 	result := make(chan int)
 	totalLetters := 0
 
+	//below code creates new file if you need it
 	/*file, err := os.Create(filepath)
 	if err != nil {
 		fmt.Println("Error:", err)
@@ -71,6 +72,7 @@ func main() {
 		}
 	}
 	defer file.Close()*/
+	//new file creattion done
 
 	file, err := os.Open(filepath)
 	if err != nil {
