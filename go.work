@@ -3,6 +3,6 @@ go 1.21.1
 use (
 	./src/lectures
 	./src/projects/MGREP
-	./src/projects/keiko
 	./src/projects/PIXL
+	./src/projects/keiko
 )
