@@ -11,7 +11,7 @@
 //  statistics of the player.
 //  - Print out the statistic change within each function
 //  - Execute each function at least once
-
+/*
 package main
 
 import "fmt"
@@ -93,7 +93,7 @@ func (d direction) String() string {
         return "North"
     case East:
         return "East"
-    case South:
+	case South:
         return "South"
     case West:
         return "West"
