@@ -4,8 +4,8 @@ import (
 	"PIXL/apptype"
 	"image/color"
 
-	"fyne.io/fyne/canvas"
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/widget"
 )
 
